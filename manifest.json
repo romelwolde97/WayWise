@@ -1,0 +1,17 @@
+{
+  "name": "WayWise - Global Accessible Transit",
+  "short_name": "WayWise",
+  "description": "Global real-time bus, train, taxi comparison and accessible navigation for blind and deaf users.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f4f7f6",
+  "theme_color": "#0066cc",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://flaticon.com",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
