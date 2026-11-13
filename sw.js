@@ -1,5 +1,5 @@
-const CACHE_NAME = 'waywise-v1';
-const ASSETS = ['index.html', 'manifest.json'];
+const CACHE_NAME = 'waywise-v2';
+const ASSETS = ['/WayWise/', '/WayWise/index.html', '/WayWise/manifest.json', '/WayWise/icon.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
