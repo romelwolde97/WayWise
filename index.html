@@ -59,7 +59,7 @@
         header {
             background-color: var(--accent-color);
             color: #ffffff;
-            padding: 15px 20px;
+            padding: 15px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -76,19 +76,19 @@
         }
 
         header h1 {
-            font-size: 1.4em;
+            font-size: 1.3em;
         }
 
         .header-btns button {
             background: rgba(255,255,255,0.2);
             border: 1px solid currentColor;
             color: inherit;
-            padding: 8px 12px;
+            padding: 7px 10px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            margin-left: 6px;
-            font-size: 0.9em;
+            margin-left: 4px;
+            font-size: 0.85em;
         }
 
         .container {
@@ -266,6 +266,15 @@
             max-width: 420px;
             border: 2px solid var(--border-color);
         }
+
+        .support-box {
+            background: rgba(0, 102, 204, 0.08);
+            border: 1px dashed var(--accent-color);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -273,7 +282,8 @@
 <header>
     <h1>WayWise</h1>
     <div class="header-btns">
-        <button onclick="readCurrentPage()" aria-label="Read Page Aloud">🔊 Read All</button>
+        <button onclick="readCurrentPage()" aria-label="Read Page Aloud">🔊 Read</button>
+        <button onclick="toggleSupport()" aria-label="Support WayWise">🤝 Support</button>
         <button onclick="toggleSettings()" aria-label="Customize Design">🎨 Style</button>
     </div>
 </header>
@@ -323,8 +333,3 @@
         </div>
     </div>
 
-    <div id="page2" class="page">
-        <h2>Nearby Taxis Worldwide</h2>
-        <div class="card">
-            <p>Find and hail verified taxis or accessible rides directly from your current GPS coordinates anywhere in the world.</p>
-            <button class="primary-btn" onclick="findRealTaxis()">🚕 Find Local Taxis on Map</button>
