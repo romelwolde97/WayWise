@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0066cc">
+    <title>WayWise - Global Accessible Transit</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #0066cc;
+            --border-color: #dddddd;
+            --font-scale: 1;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f5f5f5;
+            --accent-color: #4da3ff;
+            --border-color: #333333;
+        }
+
+        [data-theme="high-contrast"] {
+            --bg-color: #000000;
+            --card-bg: #000000;
+            --text-color: #ffff00;
+            --accent-color: #00ff00;
+            --border-color: #ffff00;
+        }
+
+        [data-theme="ocean"] {
+            --bg-color: #e0f7fa;
+            --card-bg: #ffffff;
+            --text-color: #004d40;
+            --accent-color: #00838f;
+            --border-color: #80deea;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: calc(16px * var(--font-scale));
+            padding-bottom: 90px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        [data-theme="high-contrast"] header {
+            background-color: #000000;
+            color: #ffff00;
+            border-bottom: 2px solid #ffff00;
+        }
+
+        header h1 {
+            font-size: 1.4em;
+        }
+
+        .header-btns button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid currentColor;
+            color: inherit;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 6px;
+            font-size: 0.9em;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            gap: 10px;
+        }
+
+        .badge {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+
+        [data-theme="high-contrast"] .badge {
+            background-color: #ffff00;
+            color: #000000;
+        }
+
+        .speak-btn {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 12px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95em;
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1em;
+        }
+
+        .primary-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 13px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        [data-theme="high-contrast"] .primary-btn {
+            background-color: #ffff00;
+            color: #000000;
+        }
+
+        .visual-alert {
+            background-color: #ff9800;
+            color: #000000;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: none;
+            text-align: center;
+            border: 2px solid #000000;
+        }
+
+        .gps-status {
+            font-size: 0.9em;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(0, 102, 204, 0.1);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-bg);
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 0.85em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            opacity: 0.65;
+            padding: 4px 10px;
+        }
+
+        nav button.active {
+            opacity: 1;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 14px;
+            width: 90%;
+            max-width: 420px;
+            border: 2px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>WayWise</h1>
+    <div class="header-btns">
+        <button onclick="readCurrentPage()" aria-label="Read Page Aloud">🔊 Read All</button>
+        <button onclick="toggleSettings()" aria-label="Customize Design">🎨 Style</button>
+    </div>
+</header>
+
+<div class="container">
+    <div id="visualAlert" class="visual-alert" role="alert" aria-live="assertive"></div>
+
+    <div class="gps-status">
+        <span id="gpsText">📍 Detecting GPS location...</span>
+        <button onclick="locateUser()" style="padding:4px 8px; border-radius:6px; cursor:pointer;">Refresh GPS</button>
+    </div>
+
+    <div id="page1" class="page active">
+        <h2>Live Transit Arrivals</h2>
+        <div class="card">
+            <div class="input-group">
+                <label for="stopSearch">Search Station / Stop Worldwide:</label>
+                <input type="text" id="stopSearch" placeholder="e.g., Central Station, Times Square, London Victoria">
+                <button class="primary-btn" onclick="openLiveTransitMap()">🔍 View Real-Time Arrivals on Map</button>
+            </div>
+        </div>
+
+        <div id="arrivalsList">
+            <div class="card">
+                <div class="card-header">
+                    <strong>🚌 Line 42 - City Express</strong>
+                    <span class="badge">In 3 mins</span>
+                </div>
+                <p>Destination: <strong>Airport Terminal 3</strong></p>
+                <p>Accessibility: Low-floor ramp, Audio stop announcements</p>
+                <button class="speak-btn" onclick="announce('Bus Line 42, City Express, heading to Airport Terminal 3, arrives in 3 minutes.')">
+                    🔊 Listen to Arrival
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <strong>🚆 Metro Line A - Express</strong>
+                    <span class="badge">In 6 mins</span>
+                </div>
+                <p>Destination: <strong>Downtown Central</strong></p>
+                <p>Accessibility: Elevator access, Visual LED boards</p>
+                <button class="speak-btn" onclick="announce('Metro Line A Express, heading to Downtown Central, arrives in 6 minutes.')">
+                    🔊 Listen to Arrival
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page2" class="page">
+        <h2>Nearby Taxis Worldwide</h2>
+        <div class="card">
+            <p>Find and hail verified taxis or accessible rides directly from your current GPS coordinates anywhere in the world.</p>
+            <button class="primary-btn" onclick="findRealTaxis()">🚕 Find Taxis Near Me Now</button>
